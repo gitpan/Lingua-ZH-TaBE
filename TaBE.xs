@@ -1,12 +1,15 @@
 /* $File: //member/autrijus/Lingua-ZH-TaBE/TaBE.xs $ $Author: autrijus $
-   $Revision: #8 $ $Change: 3642 $ $DateTime: 2003/01/19 14:11:07 $ */
+   $Revision: #9 $ $Change: 9693 $ $DateTime: 2004/01/12 19:11:18 $ */
 
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
 #include "ppport.h"
-
 #include <tabe.h>
+
+#if PERL_REVISION == 5 && PERL_VERSION < 7
+#define sv_setref_uv(rv, classname, uv) sv_setuv(newSVrv(rv, classname), uv)
+#endif
 
 typedef struct ChuInfo *    Chu;
 typedef struct ChunkInfo *  Chunk;

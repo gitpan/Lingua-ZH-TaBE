@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.37.
+signed via the Module::Signature module, version 0.38.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,22 +15,22 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 63125f95e93f98cc848b2439f435c23dd80902c8 AUTHORS
-SHA1 02f32d9d7ae3fb95128189f425272e19f0c0bff1 Changes
+SHA1 fd2ce1256508a22b0939ab08d90ff7cf9bfd776f Changes
 SHA1 be1cb9e9a572fd93187550206603b226a8593b82 MANIFEST
 SHA1 b8ccd318eac53261bc76bdadbc68e8b6d58a262f MANIFEST.SKIP
-SHA1 5ef189373c7d3c74214dd98315f2ecf10b53773c META.yml
+SHA1 b46a6ed2983a89b25edfd6c6dea4840f1fcbcc02 META.yml
 SHA1 0d383abaa01e2b84e077ab7648a1785c955e6bcd Makefile.PL
 SHA1 b39661bc4b26199e187ce32402daa6c8cbbaea8a README
-SHA1 eb595db0e2870ec076f20a9c742afb68c6ee4c51 TaBE.xs
-SHA1 31c81abbd87fb15f7ec8d859b1f3e943473d67b6 lib/Lingua/ZH/TaBE.pm
-SHA1 4abd8dca6d0b8d88fc9261ee32d21db39fe9c06c ppport.h
+SHA1 c3ab7e493682fa0f5faab8502445d9447a06fb74 TaBE.xs
+SHA1 85041a02e62d63abd786f91e88326a4dcdef32d0 lib/Lingua/ZH/TaBE.pm
+SHA1 ff501db12008a9735ffc9b498687b1d965e0bb11 ppport.h
 SHA1 a5de2f7fc217c42d66e79c6d5e38659fc819b95f t/0-signature.t
 SHA1 999f65cf60b37bc87d5261a98b0e794a03b83c34 t/1-basic.t
 SHA1 bafcc73082e998e2b53fc44c181e4f78ec27fdfa typemap
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.1 (FreeBSD)
+Version: GnuPG v1.2.3 (FreeBSD)
 
-iD8DBQFAAUhqtLPdNzw1AaARAkJIAKCru2R3Xiod6PYIp3IOk3yv/wd6WgCbBoul
-O+g6o3/tgCUdcae6FbTgTyI=
-=s0BG
+iD8DBQFAAvNVtLPdNzw1AaARAiGKAKC8hBzqNtkAgvx42LVMFLTj+fdSQQCfeS2S
+QVEhUSmSz7b6vHOZ2/vbfVc=
+=qvx0
 -----END PGP SIGNATURE-----

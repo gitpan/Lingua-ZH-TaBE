@@ -1,8 +1,8 @@
 # $File: //member/autrijus/Lingua-ZH-TaBE/lib/Lingua/ZH/TaBE.pm $ $Author: autrijus $
-# $Revision: #1 $ $Change: 9666 $ $DateTime: 2004/01/11 12:36:44 $
+# $Revision: #2 $ $Change: 9693 $ $DateTime: 2004/01/12 19:11:18 $
 
 package Lingua::ZH::TaBE;
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -116,11 +116,9 @@ sub Chunk {
 
 sub Tsi {
     my $self = shift;
-    my $tsi = Lingua::ZH::TaBE::Tsi->new(
-	$_[0] =~ m/((?:[\xa1-\xf9][\x40-\x7e\xa1-\xfe])+)/
+    return Lingua::ZH::TaBE::Tsi->new(
+	($_[0] =~ m/((?:[\xa1-\xf9][\x40-\x7e\xa1-\xfe])+)/) ? $1 : ''
     );
-    #  $self->{tsi_db}->Get($tsi);
-    return $tsi;
 }
 
 sub Zhi {
@@ -332,8 +330,8 @@ Lingua::ZH::TaBE - Chinese processing via libtabe
 
 =head1 VERSION
 
-This document describes version 0.04 of Lingua::ZH::TaBE, released
-January 11, 2004.
+This document describes version 0.05 of Lingua::ZH::TaBE, released
+January 13, 2004.
 
 =head1 SYNOPSIS
 
