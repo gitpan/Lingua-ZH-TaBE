@@ -1,11 +1,11 @@
 /* $File: //member/autrijus/Lingua-ZH-TaBE/TaBE.xs $ $Author: autrijus $
-   $Revision: #4 $ $Change: 3607 $ $DateTime: 2003/01/18 14:59:26 $ */
+   $Revision: #6 $ $Change: 3611 $ $DateTime: 2003/01/18 16:01:31 $ */
 
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
 
-#include <tabe/tabe.h>
+#include <tabe.h>
 
 typedef struct ChuInfo *    Chu;
 typedef struct ChunkInfo *  Chunk;

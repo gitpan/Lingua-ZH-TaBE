@@ -1,5 +1,5 @@
 # $File: //member/autrijus/Lingua-ZH-TaBE/Makefile.PL $ $Author: autrijus $
-# $Revision: #2 $ $Change: 3607 $ $DateTime: 2003/01/18 14:59:26 $
+# $Revision: #4 $ $Change: 3613 $ $DateTime: 2003/01/18 16:03:19 $
 
 use ExtUtils::MakeMaker;
 
@@ -28,9 +28,12 @@ WriteMakefile(
     ABSTRACT		=> 'Chinese processing via libtabe',
     NAME		=> 'Lingua::ZH::TaBE',
     VERSION_FROM	=> 'TaBE.pm',
-    LIBS		=> ["-ltabe -l$db"],
+    LIBS		=> "-ltabe -l$db -L/usr/local/lib/tabe -L/usr/local/tabe/lib -L/usr/local/db/BerkeleyDB/lib -L/usr/local/lib/$db",
     DEFINE		=> '',
-    INC			=> '',
+    INC			=> '-I/usr/local/include/tabe -I/usr/local/tabe/include',
+    PREREQ_PM		=> {
+	'Test::More'	=> '0.01',
+    },
 );
 
 1;

@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 # $File: //member/autrijus/Lingua-ZH-TaBE/t/1-basic.t $ $Author: autrijus $
-# $Revision: #4 $ $Change: 3607 $ $DateTime: 2003/01/18 14:59:26 $
+# $Revision: #6 $ $Change: 3613 $ $DateTime: 2003/01/18 16:03:19 $
 
-use blib;
-use Test::More qw(no_plan);
+use bytes;
+use Test::More tests => 12;
 
 BEGIN { use_ok( 'Lingua::ZH::TaBE' ) }
 

@@ -1,11 +1,11 @@
 # $File: //member/autrijus/Lingua-ZH-TaBE/TaBE.pm $ $Author: autrijus $
-# $Revision: #5 $ $Change: 3607 $ $DateTime: 2003/01/18 14:59:26 $
+# $Revision: #8 $ $Change: 3614 $ $DateTime: 2003/01/18 16:24:59 $
 
 package Lingua::ZH::TaBE;
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
+use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 require Exporter;
 require DynaLoader;
@@ -40,7 +40,7 @@ require DynaLoader;
     DB_FLAG_SHARED
     DB_FLAG_NOUNPACK_YIN
 );
-$VERSION = '0.01';
+%EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 require '_h2ph_pre.ph';
 
@@ -70,8 +70,18 @@ my %cache;
 
 sub new {
     my ($class, %args) = @_;
-    $args{tsi_db} ||= '/usr/local/share/tabe/tsiyin/tsi.db',
-    # $args{tsiyin_db} ||= '/usr/local/share/tabe/tsiyin/yin.db',
+
+    $args{tsi_db} ||= '/usr/local/lib/tabe/tsi.db';
+    $args{tsi_db} ||= '/usr/local/share/tabe/tsiyin/tsi.db'
+	unless -e $args{tsi_db};
+    $args{tsi_db} ||= '/usr/local/tabe/lib/tsi.db'
+	unless -e $args{tsi_db};
+
+    $args{tsiyin_db} ||= '/usr/local/lib/tabe/yin.db';
+    $args{tsiyin_db} ||= '/usr/local/share/tabe/tsiyin/yin.db'
+	unless -e $args{tsiyin_db};
+    $args{tsi_db} ||= '/usr/local/tabe/lib/yin.db'
+	unless -e $args{tsi_db};
 
     my $self = {};
 
@@ -117,10 +127,12 @@ sub Chunk {
 }
 
 sub Tsi {
-    my $class = shift;
-    return Lingua::ZH::TaBE::Tsi->new(
+    my $self = shift;
+    my $tsi = Lingua::ZH::TaBE::Tsi->new(
 	$_[0] =~ m/((?:[\xa1-\xf9][\x40-\x7e\xa1-\xfe])+)/
     );
+    #  $self->{tsi_db}->Get($tsi);
+    return $tsi;
 }
 
 sub Zhi {
@@ -156,6 +168,9 @@ sub ZozyKey {
 	ZozyKeyToZuYinIndex($_[0])
     );
 }
+
+sub TsiDB { shift->{tsi_db} }
+sub TsiYinDB { shift->{tsiyin_db} }
 
 package Lingua::ZH::TaBE::Chu;
 use overload '""' => sub { shift->chu }, fallback => 1;
@@ -325,16 +340,19 @@ __END__
 
 Lingua::ZH::TaBE - Chinese processing via libtabe
 
+=head1 VERSION
+
+This document describes version 0.02 of Lingua::ZH::TaBE, released
+January 19, 2003.
+
 =head1 SYNOPSIS
 
     use Lingua::ZH::TaBE;
 
-    my $tabe = Lingua::ZH::TaBE->new(
-	tsi_db => '/usr/local/share/tabe/tsiyin/tsi.db'
-    );
+    my $tabe = Lingua::ZH::TaBE->new;
 
     # Phrase splitter
-    my @words = $tabe->split(
+    my @phrases = $tabe->split(
 	"當我們在電腦中處理中文資訊時，相信其中最惱人的".
 	"狀況之一，莫過於想打的字打不出來了。"
     );
@@ -349,32 +367,34 @@ Lingua::ZH::TaBE - Chinese processing via libtabe
 
 =head1 DESCRIPTION
 
-This module is a Perl interface to the B<TaBE> (Taiwan and Big5 Encoding)
-library, an unified interface and library dealing with Chinese words,
-phrases, sentences, and phonetic symbols; it is intended to be used as the
-foundation of Chinese text processing.
+This module is a Perl interface to the B<TaBE> (Taiwan and Big5
+Encoding) library, an unified interface and library dealing with Chinese
+words, phrases, sentences, and phonetic symbols; it is intended to be
+used as the foundation of Chinese text processing.
 
 B<Lingua::ZH::TaBE> provides an object-oriented interface (preferred),
-as well as a procedural interface consisting of all C functions in C<tabe.h>.
+as well as a procedural interface consisting of all C functions in
+C<tabe.h>.
 
 =head1 Object-Oriented Interface
 
 =head2 Lingua::ZH::TaBE
 
-=head3 new( tsi_db => $file )
+=head3 new( [tsi_db => $file, tsiyin_db => $file] )
 
-Creates a LibTaBE handle and opens databases.
+Creates a LibTaBE handle and opens databases.  If unspecified, find in
+the usual libtabe data directory automatically.
 
 =head3 split( $string [, $method] )
 
-Split the text in C<$string>; returns a list of strings representing
-the words obtained.  You may specify C<Complex> or C<Backward> as
-C<$method> to use an alternate segmentation algorithm.
+Split the text in C<$string>; returns a list of strings representing the
+words obtained.  You may specify C<Complex> or C<Backward> as C<$method>
+to use an alternate segmentation algorithm.
 
 =head3 Chu(), Chunk(), Tsi(), Zhi(), Yin(), ZuYin()
 
-Constructors for various level of objects, each taking one argument
-for initialization.
+Constructors for various level of objects, each taking one argument for
+initialization.
 
 =head2 Lingua::ZH::TaBE::Chu
 
@@ -422,35 +442,48 @@ for initialization.
 
 =head1 Procedural Interface
 
-  struct TsiDB       *TsiDBOpen(int type, const char *db_name, int flags);
-  int                 TsiInfoLookupPossibleTsiYin(struct TsiDB *tsidb,
-                                                    struct TsiInfo *tsi);
-  struct TsiYinDB    *TsiYinDBOpen(int type, const char *db_name,
-				     int flags);
-  int                 ChuInfoToChunkInfo(struct ChuInfo *chu);
-  int                 ChunkSegmentationSimplex(struct TsiDB *tsidb,
-						 struct ChunkInfo *chunk);
-  int                 ChunkSegmentationComplex(struct TsiDB *tsidb,
-						 struct ChunkInfo *chunk);
-  int                 ChunkSegmentationBackward(struct TsiDB *tsidb,
-						  struct ChunkInfo *chunk);
-  int                 TsiInfoLookupZhiYin(struct TsiDB *tsidb,
-                                            struct TsiInfo *z);
-  ZhiStr              YinLookupZhiList(Yin yin);
-  ZuYinSymbolSequence YinToZuYinSymbolSequence(Yin yin);
-  Yin                 ZuYinSymbolSequenceToYin(ZuYinSymbolSequence str);
-  const Zhi           ZuYinIndexToZuYinSymbol(ZuYinIndex idx);
-  ZuYinIndex          ZuYinSymbolToZuYinIndex(ZuYinSymbol sym);
-  ZuYinIndex          ZozyKeyToZuYinIndex(int key);
-  int                 ZhiIsBig5Code(Zhi zhi);
-  ZhiCode             ZhiToZhiCode(Zhi zhi);
-  Zhi                 ZhiCodeToZhi(ZhiCode code);
-  int                 ZhiCodeToPackedBig5Code(ZhiCode code);
-  unsigned long int   ZhiCodeLookupRefCount(ZhiCode code);
+All functions below belong to the B<Lingua::ZH::TaBE> class; they are
+not exported by default, but may be imported explicitly, or implicitly
+via C<use Lingua::ZH::TaBE ':all'>.
+
+    $TsiDB	= TsiDBOpen($type, $db_name, $flags);
+    $num	= TsiInfoLookupPossibleTsiYin($TsiDB, $Tsi);
+    $TsiYinDB	= TsiYinDBOpen($type, $db_name, $flags);
+    $num	= ChuInfoToChunkInfo($Chu);
+    $num	= ChunkSegmentationSimplex($TsiDB, $Chunk);
+    $num	= ChunkSegmentationComplex($TsiDB, $Chunk);
+    $num	= ChunkSegmentationBackward($TsiDB, $Chunk);
+    $num	= TsiInfoLookupZhiYin($TsiDB, $Tsi);
+    $string     = YinLookupZhiList($Yin);
+    $string     = YinToZuYinSymbolSequence($Yin);
+    $yin	= ZuYinSymbolSequenceToYin($string);
+    $zhi	= ZuYinIndexToZuYinSymbol($ZuYin);
+    $zuyin	= ZuYinSymbolToZuYinIndex($Zhi);
+    $zuyin	= ZozyKeyToZuYinIndex($key);
+    $num	= ZhiIsBig5Code($Zhi);
+    $zhicode	= ZhiToZhiCode($Zhi);
+    $zhi        = ZhiCodeToZhi($zhicode);
+    $num	= ZhiCodeToPackedBig5Code($zhicode);
+    $num	= ZhiCodeLookupRefCount($zhicode);
+
+=head1 Constants
+
+All constants below belong to the B<Lingua::ZH::TaBE> class; they are
+not exported by default, but may be imported explicitly, or implicitly
+via C<use Lingua::ZH::TaBE ':all'>.
+
+    DB_TYPE_DB			0
+    DB_TYPE_LAST		1
+    DB_FLAG_OVERWRITE		0x01
+    DB_FLAG_CREATEDB		0x02
+    DB_FLAG_READONLY		0x04
+    DB_FLAG_NOSYNC		0x08
+    DB_FLAG_SHARED		0x10
+    DB_FLAG_NOUNPACK_YIN	0x20
 
 =head1 CAVEATS
 
-The B<TsiYin> family of fucntions is yet imcomplete.
+The B<TsiYin> family of functions are yet incomplete.
 
 =head1 SEE ALSO
 

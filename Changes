@@ -1,4 +1,30 @@
 ____________________________________________________________________________
+[  3614] By: autrijus                              on 2003/01/18  16:24:59
+        Log: * This be 0.02.
+             * pod tweaks.
+	   ! TaBE.pm
+____________________________________________________________________________
+[  3613] By: autrijus                              on 2003/01/18  16:03:19
+        Log: * require Test::More now.
+             * fix test numbers.
+	   ! Makefile.PL t/1-basic.t
+____________________________________________________________________________
+[  3612] By: autrijus                              on 2003/01/18  16:01:47
+        Log: * use Test::More for signature test.
+	   ! t/0-signature.t
+____________________________________________________________________________
+[  3611] By: autrijus                              on 2003/01/18  16:01:31
+        Log: * add default paths for linux and other posix platforms.
+	   ! Makefile.PL TaBE.xs
+____________________________________________________________________________
+[  3610] By: autrijus                              on 2003/01/18  16:01:03
+        Log: * fix tabe path lookups.
+	   ! TaBE.pm
+____________________________________________________________________________
+[  3609] By: autrijus                              on 2003/01/18  15:19:51
+        Log: * avoid warnings.
+	   ! TaBE.pm TaBE.xs t/1-basic.t
+____________________________________________________________________________
 [  3607] By: autrijus                              on 2003/01/18  14:59:26
         Log: * 0.01, first CPAN release.
 	   + MANIFEST.SKIP README
