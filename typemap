@@ -16,6 +16,7 @@ YinList						T_PV
 Yin						T_UV
 unsigned long int				T_UV
 unsigned short int				T_UV
+const char *					T_PV
 
 INPUT
 T_PTROBJ

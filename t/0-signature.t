@@ -1,23 +1,20 @@
 #!/usr/bin/perl
 # $File: //member/autrijus/Lingua-ZH-TaBE/t/0-signature.t $ $Author: autrijus $
-# $Revision: #2 $ $Change: 3612 $ $DateTime: 2003/01/18 16:01:47 $
+# $Revision: #3 $ $Change: 3635 $ $DateTime: 2003/01/19 12:30:26 $
 
 use strict;
-use Test::More tests => 1;
+print "1..1\n";
 
-SKIP: {
-    if (!eval { require Socket; Socket::inet_aton('pgp.mit.edu') }) {
-	skip("Cannot connect to the keyserver", 1);
-    }
-    elsif (!eval { require Module::Signature; 1 }) {
-	diag("Next time around, consider install Module::Signature,\n".
-	     "so you can verify the integrity of this distribution.\n");
-	skip("Module::Signature not installed", 1);
-    }
-    else {
-	ok(Module::Signature::verify() == Module::Signature::SIGNATURE_OK()
-	    => "Valid signature" );
-    }
+if (!eval { require Socket; Socket::inet_aton('pgp.mit.edu') }) {
+    print "ok 1 # skip - Cannot connect to the keyserver";
 }
-
-__END__
+elsif (!eval { require Module::Signature; 1 }) {
+    warn "# Next time around, consider install Module::Signature,\n".
+	    "# so you can verify the integrity of this distribution.\n";
+    print "ok 1 # skip - Module::Signature not installed\n";
+}
+else {
+    (Module::Signature::verify() == Module::Signature::SIGNATURE_OK())
+	or print "not ";
+    print "ok 1 # Valid signature\n";
+}

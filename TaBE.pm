@@ -1,8 +1,8 @@
 # $File: //member/autrijus/Lingua-ZH-TaBE/TaBE.pm $ $Author: autrijus $
-# $Revision: #8 $ $Change: 3614 $ $DateTime: 2003/01/18 16:24:59 $
+# $Revision: #12 $ $Change: 3646 $ $DateTime: 2003/01/19 14:23:10 $
 
 package Lingua::ZH::TaBE;
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -228,7 +228,7 @@ sub zhis {
 
 sub yins {
     my $tsi = shift;
-    $tsi->LookupPossibleTsiYin(@_) unless $tsi->yinnum;
+    $tsi->LookupZhiYin(@_) unless $tsi->yinnum;
     return unless defined wantarray;
     wantarray ? $tsi->yindata : [ $tsi->yindata ];
 };
@@ -342,7 +342,7 @@ Lingua::ZH::TaBE - Chinese processing via libtabe
 
 =head1 VERSION
 
-This document describes version 0.02 of Lingua::ZH::TaBE, released
+This document describes version 0.03 of Lingua::ZH::TaBE, released
 January 19, 2003.
 
 =head1 SYNOPSIS
@@ -380,65 +380,93 @@ C<tabe.h>.
 
 =head2 Lingua::ZH::TaBE
 
-=head3 new( [tsi_db => $file, tsiyin_db => $file] )
+=over 4
+
+=item new( [tsi_db => $file, tsiyin_db => $file] )
 
 Creates a LibTaBE handle and opens databases.  If unspecified, find in
 the usual libtabe data directory automatically.
 
-=head3 split( $string [, $method] )
+=item split( $string [, $method] )
 
 Split the text in C<$string>; returns a list of strings representing the
 words obtained.  You may specify C<Complex> or C<Backward> as C<$method>
 to use an alternate segmentation algorithm.
 
-=head3 Chu(), Chunk(), Tsi(), Zhi(), Yin(), ZuYin()
+=item Chu(), Chunk(), Tsi(), Zhi(), Yin(), ZuYin()
 
 Constructors for various level of objects, each taking one argument for
 initialization.
 
+=back
+
 =head2 Lingua::ZH::TaBE::Chu
 
-=head3 chunks()
+=over 4
+
+=item chunks()
+
+=back
 
 =head2 Lingua::ZH::TaBE::Chunk
 
-=head3 tsis([$method])
+=over 4
+
+=item tsis([$method])
+
+=back
 
 =head2 Lingua::ZH::TaBE::Tsi
 
-=head3 zhis()
+=over 4
 
-=head3 yins()
+=item zhis()
+
+=item yins()
+
+=back
 
 =head2 Lingua::ZH::TaBE::Zhi
 
-=head3 yins()
+=over 4
 
-=head3 ToZhi()
+=item yins()
 
-=head3 ToZhiCode()
+=item ToZhi()
 
-=head3 IsBig5Code()
+=item ToZhiCode()
 
-=head3 ToPackedBig5Code()
+=item IsBig5Code()
 
-=head3 LookupRefCount()
+=item ToPackedBig5Code()
+
+=item LookupRefCount()
+
+=back
 
 =head2 Lingua::ZH::TaBE::Yin
 
-=head3 zuyins()
+=over 4
 
-=head3 zhis()
+=item zuyins()
 
-=head3 ToYin()
+=item zhis()
 
-=head3 ToZuYinSymbolSequence()
+=item ToYin()
+
+=item ToZuYinSymbolSequence()
+
+=back
 
 =head2 Lingua::ZH::TaBE::ZuYin
 
-=head3 yin()
+=over 4
 
-=head3 zhi()
+=item yin()
+
+=item zhi()
+
+=back
 
 =head1 Procedural Interface
 

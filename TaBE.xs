@@ -1,9 +1,10 @@
 /* $File: //member/autrijus/Lingua-ZH-TaBE/TaBE.xs $ $Author: autrijus $
-   $Revision: #6 $ $Change: 3611 $ $DateTime: 2003/01/18 16:01:31 $ */
+   $Revision: #8 $ $Change: 3642 $ $DateTime: 2003/01/19 14:11:07 $ */
 
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#include "ppport.h"
 
 #include <tabe.h>
 
@@ -113,7 +114,7 @@ new(package, chu, num_chunk=-1)
 	ZhiStr		    chu
 	int		    num_chunk
     CODE:
-	RETVAL = safemalloc(sizeof(struct ChuInfo));
+	New(1, RETVAL, 1, struct ChuInfo);
 	RETVAL->chu = chu;
 	RETVAL->num_chunk = num_chunk;
 	RETVAL->chunk = NULL;
@@ -166,7 +167,7 @@ new(package, chunk, num_tsi=-1)
 	ZhiStr		    chunk
 	int		    num_tsi
     CODE:
-	RETVAL = safemalloc(sizeof(struct ChunkInfo));
+	New(0, RETVAL, 1, struct ChunkInfo);
 	RETVAL->chunk = chunk;
 	RETVAL->num_tsi = num_tsi;
 	RETVAL->tsi = NULL;
@@ -239,7 +240,7 @@ new(package, tsi, refcount=0, yinnum=0)
 	unsigned long int   refcount
 	unsigned long int   yinnum
     CODE:
-	RETVAL = safemalloc(sizeof(struct TsiInfo));
+	New(0, RETVAL, 1, struct TsiInfo);
 	RETVAL->tsi = tsi;
 	RETVAL->refcount = refcount;
 	RETVAL->yinnum = yinnum;
@@ -313,7 +314,7 @@ new(package, yin, yinlen=0, tsinum=0, tsidata=NULL)
 	unsigned long int   tsinum
 	ZhiStr		    tsidata
     CODE:
-	RETVAL = safemalloc(sizeof(struct TsiYinInfo));
+	New(0, RETVAL, 1, struct TsiYinInfo);
 	RETVAL->yin = yin;
 	RETVAL->yinlen = strlen((char *)yin);
 	RETVAL->tsinum = tsinum;
@@ -355,11 +356,11 @@ tsidata(tsiyin, i=0, tmp=NULL, tsi=NULL)
 	if (tsiyin->tsinum <= 0) XSRETURN_EMPTY;
 	EXTEND(SP, tsiyin->tsinum);
 	for (; i < tsiyin->tsinum; i++) {
-	    tsi = safemalloc(sizeof(struct TsiInfo));
+	    New(0, tsi, 1, struct TsiInfo);
 	    strncpy(
 		tsi->tsi, 
-		(char *)tsiyin->tsidata+((i * tsiyin->yinlen))*2,
-		tsiyin->yinlen*2+1
+		(char *)tsiyin->tsidata+((i * tsiyin->yinlen)) * 2,
+		tsiyin->yinlen * 2 + 1
 	    );
 	    tsi->refcount = -1;
 	    tsi->yinnum = -1;
@@ -479,85 +480,85 @@ new(package, type, db_name, flags)
 	RETVAL
 
 int
-type(tsidb)
-	TsiYinDB	tsidb
+type(tsiyindb)
+	TsiYinDB	tsiyindb
     CODE:
-	RETVAL = tsidb->type;
+	RETVAL = tsiyindb->type;
     OUTPUT:
 	RETVAL
 
 int
-flags(tsidb)
-	TsiYinDB	tsidb
+flags(tsiyindb)
+	TsiYinDB	tsiyindb
     CODE:
-	RETVAL = tsidb->flags;
+	RETVAL = tsiyindb->flags;
     OUTPUT:
 	RETVAL
 
 char *
-db_name(tsidb)
-	TsiYinDB	tsidb
+db_name(tsiyindb)
+	TsiYinDB	tsiyindb
     CODE:
-	RETVAL = tsidb->db_name;
+	RETVAL = tsiyindb->db_name;
     OUTPUT:
 	RETVAL
 
 void
-Close(tsidb)
-	TsiYinDB	tsidb
+Close(tsiyindb)
+	TsiYinDB	tsiyindb
     CODE:
-	tsidb->Close(tsidb);
+	tsiyindb->Close(tsiyindb);
 
 int
-RecordNumber(tsidb)
-	TsiYinDB	tsidb
+RecordNumber(tsiyindb)
+	TsiYinDB	tsiyindb
     CODE:
-	RETVAL = tsidb->RecordNumber(tsidb);
+	RETVAL = tsiyindb->RecordNumber(tsiyindb);
     OUTPUT:
 	RETVAL
 
 int
-Put(tsidb, tsiyin)
-	TsiYinDB	tsidb
+Put(tsiyindb, tsiyin)
+	TsiYinDB	tsiyindb
 	TsiYin		tsiyin
     CODE:
-	RETVAL = tsidb->Put(tsidb, tsiyin);
+	RETVAL = tsiyindb->Put(tsiyindb, tsiyin);
     OUTPUT:
 	RETVAL
 
 int
-Get(tsidb, tsiyin)
-	TsiYinDB	tsidb
+Get(tsiyindb, tsiyin)
+	TsiYinDB	tsiyindb
 	TsiYin		tsiyin
     CODE:
-	RETVAL = tsidb->Get(tsidb, tsiyin);
+	RETVAL = tsiyindb->Get(tsiyindb, tsiyin);
     OUTPUT:
 	RETVAL
 
 int
-CursorSet(tsidb, tsiyin, set_range)
-	TsiYinDB	tsidb
+CursorSet(tsiyindb, tsiyin, set_range)
+	TsiYinDB	tsiyindb
 	TsiYin		tsiyin
 	int	set_range
     CODE:
-	RETVAL = tsidb->CursorSet(tsidb, tsiyin, set_range);
+	RETVAL = tsiyindb->CursorSet(tsiyindb, tsiyin, set_range);
     OUTPUT:
 	RETVAL
 
 int
-CursorNext(tsidb, tsiyin)
-	TsiYinDB	tsidb
+CursorNext(tsiyindb, tsiyin)
+	TsiYinDB	tsiyindb
 	TsiYin		tsiyin
     CODE:
-	RETVAL = tsidb->CursorNext(tsidb, tsiyin);
+	RETVAL = tsiyindb->CursorNext(tsiyindb, tsiyin);
     OUTPUT:
 	RETVAL
 
 int
-CursorPrev(tsidb, tsiyin)
-	TsiYinDB	tsidb
+CursorPrev(tsiyindb, tsiyin)
+	TsiYinDB	tsiyindb
 	TsiYin		tsiyin
     CODE:
-	RETVAL = tsidb->CursorPrev(tsidb, tsiyin);
+	RETVAL = tsiyindb->CursorPrev(tsiyindb, tsiyin);
     OUTPUT:
 	RETVAL

@@ -1,4 +1,57 @@
 ____________________________________________________________________________
+[  3647] By: autrijus                              on 2003/01/19  14:24:23
+        Log: * This be 0.03.
+             * we support 5.005 now.
+	   ! Makefile.PL
+____________________________________________________________________________
+[  3646] By: autrijus                              on 2003/01/19  14:23:10
+        Log: * switch to ZiYin since PossibleTsiYin is broken.
+             * correct ppport line for uv.
+	   ! TaBE.pm ppport.h
+____________________________________________________________________________
+[  3645] By: autrijus                              on 2003/01/19  14:15:31
+        Log: * avoid warning 'once'.
+	   ! t/1-basic.t
+____________________________________________________________________________
+[  3644] By: autrijus                              on 2003/01/19  14:13:06
+        Log: * another try at pppport.
+	   ! ppport.h
+____________________________________________________________________________
+[  3642] By: autrijus                              on 2003/01/19  14:11:07
+        Log: * add ppport support code.
+	   + ppport.h
+	   ! MANIFEST TaBE.pm TaBE.xs
+____________________________________________________________________________
+[  3639] By: autrijus                              on 2003/01/19  13:41:30
+        Log: * doc cleanup.
+	   ! Makefile.PL TaBE.pm
+____________________________________________________________________________
+[  3638] By: autrijus                              on 2003/01/19  13:39:49
+        Log: * no _uv in 5.005...
+	   ! TaBE.xs
+____________________________________________________________________________
+[  3637] By: autrijus                              on 2003/01/19  12:52:25
+        Log: * workaround for -L in 5.005's MM
+	   ! Makefile.PL
+____________________________________________________________________________
+[  3636] By: autrijus                              on 2003/01/19  12:44:14
+        Log: * add common library path for 5.005 building.
+	   ! Makefile.PL
+____________________________________________________________________________
+[  3635] By: autrijus                              on 2003/01/19  12:30:26
+        Log: * try doing without Test::More.
+	   ! Makefile.PL t/0-signature.t t/1-basic.t
+____________________________________________________________________________
+[  3634] By: autrijus                              on 2003/01/19  12:27:05
+        Log: * statue reports that 5.00503 building is broken.
+             try fixing it by adding typemap and nix bytes.pm.
+	   + AUTHORS
+	   ! MANIFEST TaBE.pm t/1-basic.t typemap
+____________________________________________________________________________
+[  3615] By: autrijus                              on 2003/01/18  16:25:38
+        Log: * changes and signatures.
+	   ! Changes SIGNATURE
+____________________________________________________________________________
 [  3614] By: autrijus                              on 2003/01/18  16:24:59
         Log: * This be 0.02.
              * pod tweaks.
