@@ -1,0 +1,31 @@
+____________________________________________________________________________
+[  3607] By: autrijus                              on 2003/01/18  14:59:26
+        Log: * 0.01, first CPAN release.
+	   + MANIFEST.SKIP README
+	   ! Makefile.PL TaBE.pm TaBE.xs t/1-basic.t
+	   ! typemap
+____________________________________________________________________________
+[  3606] By: autrijus                              on 2003/01/18  10:09:17
+        Log: * finished all object mapping. 
+	   ! TaBE.pm TaBE.xs t/1-basic.t typemap
+____________________________________________________________________________
+[  3604] By: autrijus                              on 2003/01/18  09:30:43
+        Log: * a start of the tests.
+	   ! t/1-basic.t
+____________________________________________________________________________
+[  3603] By: autrijus                              on 2003/01/18  09:30:33
+        Log: * preliminary working version of OO-based libtabe.
+	   ! TaBE.pm TaBE.xs typemap
+____________________________________________________________________________
+[  3573] By: autrijus                              on 2003/01/16  09:05:34
+        Log: * err, i really meant 2003.
+	   ! TaBE.pm
+____________________________________________________________________________
+[  3572] By: autrijus                              on 2003/01/16  09:00:04
+        Log: * signature.
+	   + SIGNATURE
+____________________________________________________________________________
+[  3571] By: autrijus                              on 2003/01/16  08:59:47
+        Log: * libtabe initial import.
+	   + Changes MANIFEST Makefile.PL TaBE.pm TaBE.xs
+	   + t/0-signature.t t/1-basic.t typemap
