@@ -1,17 +1,15 @@
 #!/usr/bin/perl
 # $File: //member/autrijus/Lingua-ZH-TaBE/t/1-basic.t $ $Author: autrijus $
-# $Revision: #9 $ $Change: 3645 $ $DateTime: 2003/01/19 14:15:31 $
+# $Revision: #11 $ $Change: 9666 $ $DateTime: 2004/01/11 12:36:44 $
 
 use Test;
 
-BEGIN { plan tests => 12 }
+BEGIN { plan tests => 14 }
 
 require Lingua::ZH::TaBE;
 ok($Lingua::ZH::TaBE::VERSION) if $Lingua::ZH::TaBE::VERSION or 1;
 
-my $tabe = Lingua::ZH::TaBE->new(
-    tsidb => '/usr/local/share/tabe/tsiyin/tsi.db'
-);
+my $tabe = Lingua::ZH::TaBE->new;
 
 ok(ref($tabe), 'Lingua::ZH::TaBE', 'blessing TaBE object');
 
@@ -57,16 +55,40 @@ ok(
 );
 
 
+# 自動斷詞
 my @words = $tabe->split(
     "當我們在電腦中處理中文資訊時,相信其中最惱人的狀況之一,".
     "莫過於想打的字打不出來了."
 );
 
-# 自動斷詞
 ok(
     join(",", @words),
     "當,我們,在,電腦,中,處理,中文,資訊,時,相信,其中,最,惱人,的,狀況,之一,莫過於,想打,的,字,打,不出來,了",
-    "split()"
+    'split($string)'
+);
+
+# 複雜斷詞
+@words = $tabe->split(
+    "當我們在電腦中處理中文資訊時,相信其中最惱人的狀況之一,".
+    "莫過於想打的字打不出來了.", "Complex"
+);
+
+ok(
+    join(",", @words),
+    "當,我們,在,電腦,中,處理,中文,資訊,時,相信,其中,最,惱人,的,狀況,之一,莫過於,想打,的,字,打,不出,來了",
+    'split($string, "Complex")'
+);
+
+# 逆向斷詞
+@words = $tabe->split(
+    "當我們在電腦中處理中文資訊時,相信其中最惱人的狀況之一,".
+    "莫過於想打的字打不出來了.", "Backward"
+);
+
+ok(
+    join(",", @words),
+    "當,我們,在,電,腦中,處理,中文,資訊,時,相信,其中,最,惱人,的,狀況,之一,莫過於,想,打的,字,打,不出,來了",
+    'split($string, "Backward")'
 );
 
 # 可用數字或文字建立 Zhi 物件

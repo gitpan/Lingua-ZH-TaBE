@@ -1,8 +1,8 @@
-# $File: //member/autrijus/Lingua-ZH-TaBE/TaBE.pm $ $Author: autrijus $
-# $Revision: #12 $ $Change: 3646 $ $DateTime: 2003/01/19 14:23:10 $
+# $File: //member/autrijus/Lingua-ZH-TaBE/lib/Lingua/ZH/TaBE.pm $ $Author: autrijus $
+# $Revision: #1 $ $Change: 9666 $ $DateTime: 2004/01/11 12:36:44 $
 
 package Lingua::ZH::TaBE;
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -40,29 +40,17 @@ require DynaLoader;
     DB_FLAG_SHARED
     DB_FLAG_NOUNPACK_YIN
 );
+
 %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
-require '_h2ph_pre.ph';
-
-unless(defined(&__TABE_H__)) {
-    eval 'sub __TABE_H__ () {1;}' unless defined(&__TABE_H__);
-    if(defined(&__cplusplus)) {
-    }
-    eval("sub DB_TYPE_DB () { 0; }") unless defined(&DB_TYPE_DB);
-    eval("sub DB_TYPE_LAST () { 1; }") unless defined(&DB_TYPE_LAST);
-    eval 'sub DB_FLAG_OVERWRITE () {0x01;}' unless defined(&DB_FLAG_OVERWRITE);
-    eval 'sub DB_FLAG_CREATEDB () {0x02;}' unless defined(&DB_FLAG_CREATEDB);
-    eval 'sub DB_FLAG_READONLY () {0x04;}' unless defined(&DB_FLAG_READONLY);
-    eval 'sub DB_FLAG_NOSYNC () {0x08;}' unless defined(&DB_FLAG_NOSYNC);
-    eval 'sub DB_FLAG_SHARED () {0x10;}' unless defined(&DB_FLAG_SHARED);
-    eval 'sub DB_FLAG_NOUNPACK_YIN () {0x20;}' unless defined(&DB_FLAG_NOUNPACK_YIN);
-    unless(defined(&TRUE)) {
-	eval 'sub TRUE () {1;}' unless defined(&TRUE);
-	eval 'sub FALSE () {0;}' unless defined(&FALSE);
-    }
-    if(defined(&__cplusplus)) {
-    }
-}
+use constant DB_TYPE_DB			=> 0;
+use constant DB_TYPE_LAST		=> 1;
+use constant DB_FLAG_OVERWRITE		=> 0x01;
+use constant DB_FLAG_CREATEDB		=> 0x02;
+use constant DB_FLAG_READONLY		=> 0x04;
+use constant DB_FLAG_NOSYNC		=> 0x08;
+use constant DB_FLAG_SHARED		=> 0x10;
+use constant DB_FLAG_NOUNPACK_YIN	=> 0x20;
 
 bootstrap Lingua::ZH::TaBE $VERSION;
 
@@ -108,7 +96,7 @@ sub new {
 
 sub split {
     map $_->tsi,
-    map $_->tsis,
+    map $_->tsis($_[1]),
     shift->Chu($_[0])->chunks;
 }
 
@@ -193,7 +181,7 @@ my %methods = (
 
 sub tsis {
     my $chunk = shift;
-    $chunk->Segmentation if $chunk->num_tsi <= 0;
+    $chunk->Segmentation(@_) if $chunk->num_tsi <= 0;
     return unless defined wantarray;
     wantarray ? $chunk->tsi : [ $chunk->tsi ];
 }
@@ -336,14 +324,16 @@ sub ToZuYinIndex {
 
 __END__
 
+=encoding big5
+
 =head1 NAME
 
 Lingua::ZH::TaBE - Chinese processing via libtabe
 
 =head1 VERSION
 
-This document describes version 0.03 of Lingua::ZH::TaBE, released
-January 19, 2003.
+This document describes version 0.04 of Lingua::ZH::TaBE, released
+January 11, 2004.
 
 =head1 SYNOPSIS
 
@@ -525,7 +515,7 @@ Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2003 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
+Copyright 2003, 2004 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

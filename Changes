@@ -1,4 +1,34 @@
 ____________________________________________________________________________
+[  9666] By: autrijus                              on 2004/01/11  12:36:44
+        Log: * This be 0.04.
+             * Kuang-Che Wu (kcwu) reported that ->split()
+             did not take a $method as advertised.
+	   + lib/Lingua/ZH/TaBE.pm
+	   - TaBE.pm
+	   ! AUTHORS MANIFEST Makefile.PL README t/1-basic.t
+____________________________________________________________________________
+[  5843] By: autrijus                              on 2003/05/14  14:25:38
+        Log: * DB=db2 won't link against DB4, of course.
+             correct doc glitch.
+	   ! Makefile.PL
+____________________________________________________________________________
+[  3698] By: autrijus                              on 2003/01/20  14:34:22
+        Log: * no need to use h2ph, since it's silly; use constants.pm instead.
+             * defining TRUE and FALSE was doubly silly.
+	   ! TaBE.pm
+____________________________________________________________________________
+[  3650] By: autrijus                              on 2003/01/19  14:35:08
+        Log: * don't hardcode the db location in tests.
+	   ! t/1-basic.t
+____________________________________________________________________________
+[  3649] By: autrijus                              on 2003/01/19  14:34:56
+        Log: * check for libtabe and die if not found, to please testers.
+	   ! Makefile.PL
+____________________________________________________________________________
+[  3648] By: autrijus                              on 2003/01/19  14:28:32
+        Log: * changes and signatures.
+	   ! Changes SIGNATURE
+____________________________________________________________________________
 [  3647] By: autrijus                              on 2003/01/19  14:24:23
         Log: * This be 0.03.
              * we support 5.005 now.
@@ -81,8 +111,7 @@ ____________________________________________________________________________
 [  3607] By: autrijus                              on 2003/01/18  14:59:26
         Log: * 0.01, first CPAN release.
 	   + MANIFEST.SKIP README
-	   ! Makefile.PL TaBE.pm TaBE.xs t/1-basic.t
-	   ! typemap
+	   ! Makefile.PL TaBE.pm TaBE.xs t/1-basic.t typemap
 ____________________________________________________________________________
 [  3606] By: autrijus                              on 2003/01/18  10:09:17
         Log: * finished all object mapping. 
@@ -106,5 +135,5 @@ ____________________________________________________________________________
 ____________________________________________________________________________
 [  3571] By: autrijus                              on 2003/01/16  08:59:47
         Log: * libtabe initial import.
-	   + Changes MANIFEST Makefile.PL TaBE.pm TaBE.xs
-	   + t/0-signature.t t/1-basic.t typemap
+	   + Changes MANIFEST Makefile.PL TaBE.pm TaBE.xs t/0-signature.t
+	   + t/1-basic.t typemap
