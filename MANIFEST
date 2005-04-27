@@ -7,7 +7,6 @@ MANIFEST.SKIP
 ppport.h
 README
 SIGNATURE
-t/0-signature.t
 t/1-basic.t
 TaBE.xs
 typemap

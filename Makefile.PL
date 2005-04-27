@@ -5,19 +5,24 @@ use 5.005;
 use Cwd;
 use ExtUtils::MakeMaker;
 
-my @libs = qw(
+my @libs = grep defined, qw(
     /usr/local/lib
     /usr/lib
     /usr/X11R6/lib
     /usr/local/lib/tabe
     /usr/local/tabe/lib
     /usr/local/db/BerkeleyDB/lib
-), Cwd::cwd();
+    /opt/local/lib
+    /sw/local/lib
+), Cwd::cwd(), $ENV{TABE_LIB};
 
 die << '.' unless grep {<$_/tabe.*> or <$_/libtabe.*>} @libs;
 This modules needs libtabe version 0.2.5 or above installed; please
 install it from ftp://xcin.linux.org.tw/pub/xcin/libtabe/devel/ before
 running Makefile.PL.
+
+If you have installed LibTaBE but it is not under the current path,
+try setting the TABE_LIB environment variable. 
 
 .
 
@@ -34,6 +39,9 @@ Otherwise, TaBE.pm will be linked with DB3.
 .
 }
 
+my $incs = join(" -I", @libs);
+$incs =~ s!/lib\b!/include!g;
+
 WriteMakefile(
     AUTHOR		=> 'Autrijus Tang <autrijus@autrijus.org>',
     ABSTRACT		=> 'Chinese processing via libtabe',
@@ -41,7 +49,7 @@ WriteMakefile(
     VERSION_FROM	=> 'lib/Lingua/ZH/TaBE.pm',
     LIBS		=> [ join(' ', map("-L$_", @libs)) . " -ltabe -l$db" ],
     DEFINE		=> '',
-    INC			=> '-I/usr/local/include/tabe -I/usr/local/tabe/include',
+    INC			=> $incs,
 );
 
 1;

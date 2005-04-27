@@ -2,7 +2,7 @@
 # $Revision: #2 $ $Change: 9693 $ $DateTime: 2004/01/12 19:11:18 $
 
 package Lingua::ZH::TaBE;
-$VERSION = '0.05';
+$VERSION = '0.06';
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -330,8 +330,8 @@ Lingua::ZH::TaBE - Chinese processing via libtabe
 
 =head1 VERSION
 
-This document describes version 0.05 of Lingua::ZH::TaBE, released
-January 13, 2004.
+This document describes version 0.06 of Lingua::ZH::TaBE, released
+April 28, 2004.
 
 =head1 SYNOPSIS
 
@@ -513,7 +513,7 @@ Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2003, 2004 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
+Copyright 2003, 2004, 2005 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
