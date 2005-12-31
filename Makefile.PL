@@ -1,9 +1,6 @@
-# $File: //member/autrijus/Lingua-ZH-TaBE/Makefile.PL $ $Author: autrijus $
-# $Revision: #12 $ $Change: 9666 $ $DateTime: 2004/01/11 12:36:44 $
-
 use 5.005;
 use Cwd;
-use ExtUtils::MakeMaker;
+use inc::Module::Install;
 
 my @libs = grep defined, qw(
     /usr/local/lib
@@ -39,17 +36,14 @@ Otherwise, TaBE.pm will be linked with DB3.
 .
 }
 
-my $incs = join(" -I", @libs);
-$incs =~ s!/lib\b!/include!g;
+my @incs = @libs;
+s!([/\\])lib\b!$1include!g for @incs;
 
-WriteMakefile(
-    AUTHOR		=> 'Autrijus Tang <autrijus@autrijus.org>',
-    ABSTRACT		=> 'Chinese processing via libtabe',
-    NAME		=> 'Lingua::ZH::TaBE',
-    VERSION_FROM	=> 'lib/Lingua/ZH/TaBE.pm',
-    LIBS		=> [ join(' ', map("-L$_", @libs)) . " -ltabe -l$db" ],
-    DEFINE		=> '',
-    INC			=> $incs,
-);
+name 'Lingua-ZH-TaBE';
+all_from;
 
-1;
+inc_paths @incs;
+lib_paths @libs;
+lib_links 'tabe', $db;
+
+sign; WriteAll;

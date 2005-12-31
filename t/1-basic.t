@@ -1,7 +1,4 @@
 #!/usr/bin/perl
-# $File: //member/autrijus/Lingua-ZH-TaBE/t/1-basic.t $ $Author: autrijus $
-# $Revision: #11 $ $Change: 9666 $ $DateTime: 2004/01/11 12:36:44 $
-
 use Test;
 
 BEGIN { plan tests => 14 }
@@ -45,11 +42,11 @@ ok(
 
 ok(
     $tabe->Chu("道可道，非常道。")
-	->chunks->[2]	    # 非常道
-	->tsis->[0]	    # 非常
-	->zhis->[1]	    # 常
-	->yins->[0]	    # ㄔㄤˊ
-	->zuyins->[0],	    # ㄔ
+        ->chunks->[2]       # 非常道
+        ->tsis->[0]         # 非常
+        ->zhis->[1]         # 常
+        ->yins->[0]         # ㄔㄤˊ
+        ->zuyins->[0],      # ㄔ
     "ㄔ",
     'tsis->zhis',
 );
